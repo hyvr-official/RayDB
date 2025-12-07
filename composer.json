@@ -1,0 +1,27 @@
+{
+    "name": "hyvr/ray-db",
+    "description": "",
+    "type": "library",
+    "version": "1.0.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hyvr",
+            "email": "hello@hyvr.dev"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Hyvr\\RayDB\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0.0",
+        "illuminate/collections": "^12.41"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^7.4"
+    }
+}
