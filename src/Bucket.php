@@ -41,13 +41,12 @@ class Bucket
 
     public function find(string $id){
         $path = $this->bucket_path.DIRECTORY_SEPARATOR.$id.'.json';
-        $json = file_get_contents($path);
 
         if(!file_exists($path)){
             throw new Exception('RayDB database document that you tried to find does not exists ('.$path.')');
         }
 
-        return new Document($this, json_decode($json, true), $id);
+        return new Document($this, Helper::parseJsonFile($path, $this->ray), $id);
     }
 
     public function query(){
@@ -83,8 +82,7 @@ class Bucket
             $path = $this->bucket_path.DIRECTORY_SEPARATOR.$seed.'.json';
 
             if(file_exists($path)){
-                $json = file_get_contents($path);
-                $document = json_decode($json, true);
+                $document = Helper::parseJsonFile($path, $this->ray);
                 $document = array_replace($document, $row);
 
                 Helper::writeJsonFile($path, $document, $this->ray);

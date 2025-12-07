@@ -55,8 +55,7 @@ class Query
         foreach($files as $file){
             if($file[0]==='_' || !str_ends_with($file, '.json') || is_dir($path.DIRECTORY_SEPARATOR.$file)) continue;
 
-            $json = file_get_contents($path.DIRECTORY_SEPARATOR.$file);
-            $document = json_decode($json, true);
+            $document = Helper::parseJsonFile($path, $this->bucket->ray);
             $documents[] = $document;
         }
         
