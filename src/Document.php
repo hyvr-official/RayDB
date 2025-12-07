@@ -38,6 +38,7 @@ class Document
 
     public function save(){
         $this->bucket->updateOrInsert($this->attributes);
+        $this->attributes = get_object_vars(json_decode(json_encode($this->attributes)));
 
         return $this;
     }
