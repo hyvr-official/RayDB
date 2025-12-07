@@ -43,7 +43,7 @@ class Bucket
         $path = $this->bucket_path.DIRECTORY_SEPARATOR.$id.'.json';
 
         if(!file_exists($path)){
-            throw new Exception('RayDB database document that you tried to find does not exists ('.$path.')');
+            return false;
         }
 
         return new Document($this, Helper::parseJsonFile($path, $this->ray), $id);
