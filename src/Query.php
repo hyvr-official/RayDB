@@ -15,8 +15,9 @@ class Query
         $this->collection = new Collection($this->getCollection());
     }
 
-    public function where($key, $operato = null, $value = null){
-        $this->collection = $this->collection->where($key, $operato, $value);
+    public function where(mixed $key, mixed $operator = null, mixed $value = null){
+        $arguments = array_filter([$key, $operator, $value], fn($value) => $value !== null);
+        $this->collection = $this->collection->where(...$arguments);
 
         return $this;
     }
@@ -35,14 +36,9 @@ class Query
         return (new Document($this->bucket, $this->collection->first()));
     }
 
-    public function sort($callback = null){
-        $this->collection = $this->collection->sort($callback);
-
-        return $this;
-    }
-
-    public function sortBy($callback, $options = SORT_REGULAR, $descending = false){
-        $this->collection = $this->collection->sortBy($callback, $options, $descending);
+    public function sort(mixed $callback, string $option = 'asc'){
+        if($option=='asc') $this->collection = $this->collection->sortBy($callback);
+        else $this->collection = $this->collection->sortByDesc($callback);
 
         return $this;
     }
@@ -55,7 +51,7 @@ class Query
         foreach($files as $file){
             if($file[0]==='_' || !str_ends_with($file, '.json') || is_dir($path.DIRECTORY_SEPARATOR.$file)) continue;
 
-            $document = Helper::parseJsonFile($path, $this->bucket->ray);
+            $document = Helper::parseJsonFile($path.DIRECTORY_SEPARATOR.$file, $this->bucket->ray);
             $documents[] = $document;
         }
         
