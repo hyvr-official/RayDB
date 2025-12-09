@@ -14,7 +14,7 @@ class Ray
 
     public string $db_folder;
 
-    public function __construct(string $db_folder, array $db_config = [], bool $is_create_if_not_found = true){
+    public function __construct(string $db_folder, array $db_config = [], bool $is_create_if_not_found = false){
         $this->db_folder = $db_folder;
         $this->db_config = array_replace($this->db_config, $db_config);
 
