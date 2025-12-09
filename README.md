@@ -97,52 +97,22 @@ Examples on how to use RayDB is given in grouped sections below.
     'color' => 'red'
   ]);
 
+  // Bulk insert
+  $bucket->insert([
+    [
+      'name' => 'apple',
+      'color' => 'red'
+    ],[
+      'name' => 'orange',
+      'color' => 'orange'
+    ]
+  ]);
+
   // Another method to insert with object
   $apple = $ray->bucket('fruits')->new('apple');
   $apple->name = 'apple';
   $apple->color = 'red';
   $apple->save();
-?>
-`````
-</details>
-
-<details name="usage">
-<summary>Bulk insert</summary>
-<br>
-  
-`````php
-<?php
-  require 'vendor/autoload.php';
-
-  use Hyvr\RayDB\Ray;
-
-  $ray = new Ray(__DIR__.'/buckets');
-
-  // Bulk insert without id
-  $bucket = $ray->bucket('fruits');
-
-  $bucket->insert([
-    [
-      'name' => 'apple',
-      'color' => 'red'
-    ],[
-      'name' => 'orange',
-      'color' => 'orange'
-    ]
-  ]);
-
-  // Bulk insert id
-  $bucket->insert([
-    [
-      '_id' => 'apple',
-      'name' => 'apple',
-      'color' => 'red'
-    ],[
-      '_id' => 'orange',
-      'name' => 'orange',
-      'color' => 'orange'
-    ]
-  ]);
 ?>
 `````
 </details>
@@ -175,7 +145,7 @@ Examples on how to use RayDB is given in grouped sections below.
     echo $fruit->color;
   }
 
-  // Query multiple using condition
+  // Query using condition
   $fruits = $bucket->query()->where('color', 'red')->get();
 
   $fruits = $bucket->query()->where('size', '>=', 100)->get();
@@ -184,12 +154,18 @@ Examples on how to use RayDB is given in grouped sections below.
     echo $fruit->name;
     echo $fruit->color;
   }
+
+  // Query using condition and get first
+  $fruit = $bucket->query()->where('color', 'red')->first();
+
+  echo $fruit->name;
+  echo $fruit->color;
 ?>
 `````
 </details>
 
 <details name="usage">
-<summary>Insert</summary>
+<summary>Update</summary>
 <br>
   
 `````php
@@ -200,31 +176,60 @@ Examples on how to use RayDB is given in grouped sections below.
 
   $ray = new Ray(__DIR__.'/buckets');
 
-  // Create a bucket called 'fruits' and insert a document
   $bucket = $ray->bucket('fruits');
 
-  $bucket->insert([
-    'name' => 'apple',
-    'color' => 'red',
-    'size' => ['small', 'medium'],
-    'orgin' => [
-      'name' => 'India',
-      'code' => 'IN'
-    ]
-  ]);
-
-  // Insert a document with id
-  $bucket->insert([
-    '_id' => 'apple',
-    'name' => 'apple',
-    'color' => 'red'
-  ]);
-
-  // Another method to insert with object
-  $apple = $ray->bucket('fruits')->new('apple');
-  $apple->name = 'apple';
+  // Find a document with id and update it
+  $apple = $ray->bucket('fruits')->find('apple');
   $apple->color = 'red';
   $apple->save();
+
+  // Bulk update with id
+  $bucket->update([
+    [
+      '_id' => 'apple',
+      'name' => 'apple',
+      'color' => 'red'
+    ],[
+      '_id' => 'orange',
+      'name' => 'orange',
+      'color' => 'orange'
+    ]
+  ]);
+?>
+`````
+</details>
+
+<details name="usage">
+<summary>Upsert</summary>
+<br>
+  
+`````php
+<?php
+  require 'vendor/autoload.php';
+
+  use Hyvr\RayDB\Ray;
+
+  $ray = new Ray(__DIR__.'/buckets');
+
+  $bucket = $ray->bucket('fruits');
+
+  // Upsert using id
+  $apple = $ray->bucket('fruits')->newOrUpdate('apple');
+  $apple->color = 'red';
+  $apple->save();
+
+  // Bulk upsert with id
+  $bucket->updateOrInsert([
+    [
+      '_id' => 'apple',
+      'name' => 'apple',
+      'color' => 'red'
+    ],[
+      '_id' => 'orange',
+      'name' => 'orange',
+      'color' => 'orange'
+    ]
+  ]);
 ?>
 `````
 </details>
