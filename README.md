@@ -4,7 +4,7 @@ RayDB is a lightweight NoSQL database built in PHP that relies solely on plain J
 ### :zap: Get started
 RayDB can be installed from the composer package manager. Make sure you installed PHP and Composer from the requirments section before continuing. Run the below command to install the RayDB.
 `````
-composer require niyko/transpicious
+composer require hyvr/ray-db
 `````
 Example usage is given below. More usage examples are details given in the below section.
 `````php
@@ -30,6 +30,12 @@ Example usage is given below. More usage examples are details given in the below
   $fruits = $bucket->query()->sortBy('name')->get();
 ?>
 `````
+
+### :open_file_folder: Concept
+RayDB saves all the data in JSOn files. These can be created or edited manually. All database have a folder where these JSOn files will be saved. Here is the core concept of RayDB explained below.
+
+* `Buckets` are like folders inside the database where similar JSON documents are saved.
+* `Document` is a JSON file where the actual data is saved. Each document will have an unique `_id`. `_id` of the document and the file name should be same. You can give an `_id` during insert, if not that system will give a random unique string.
 
 ### :tophat: Requirments
 The RayDB has a few system requirements. You should ensure that your local system has the following minimum PHP version and extensions:
