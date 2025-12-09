@@ -153,7 +153,7 @@ Examples on how to use RayDB is given in grouped sections below.
 
   // Query using condition
   $fruits = $bucket->query()->where('color', 'red')->get();
-
+  
   $fruits = $bucket->query()->where('size', '>=', 100)->get();
 
   foreach($fruits as $fruit){
@@ -236,6 +236,32 @@ Examples on how to use RayDB is given in grouped sections below.
       'color' => 'orange'
     ]
   ]);
+?>
+`````
+</details>
+
+<details name="usage">
+<summary>Sort</summary>
+<br>
+  
+`````php
+<?php
+  require 'vendor/autoload.php';
+
+  use Hyvr\RayDB\Ray;
+
+  $ray = new Ray(__DIR__.'/buckets');
+
+  $bucket = $ray->bucket('fruits');
+
+  // Sort by ascending
+  $fruits = $bucket->query()->sort('color')->get();
+
+  // Sort by descending
+  $fruits = $bucket->query()->sort('color', 'desc')->get();
+
+  // Sort by ascending with condition
+  $fruits = $bucket->query()->where('color', 'red')->sort('color')->get();
 ?>
 `````
 </details>
