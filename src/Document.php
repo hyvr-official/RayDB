@@ -12,11 +12,14 @@ class Document
     private Bucket $bucket;
 
     public function __construct(Bucket $bucket, array $data = [], string $id = ''){
-        $this->_id = ($id=='')?Helper::getUniqueId():$id;
         $this->bucket = $bucket;
         $this->attributes = $data;
 
-        if(!isset($this->attributes['_id'])) $this->attributes['_id'] = $this->_id;
+        if($id!='') $this->_id = $id;
+        else if(isset($this->attributes['_id'])) $this->_id = $this->_id;
+        else $this->_id = Helper::getUniqueId();
+
+        $this->attributes['_id'] = $this->_id;
     }
 
     public function __get($key){
