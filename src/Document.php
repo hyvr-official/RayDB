@@ -16,7 +16,7 @@ class Document
         $this->attributes = $data;
 
         if($id!='') $this->_id = $id;
-        else if(isset($this->attributes['_id'])) $this->_id = $this->_id;
+        else if(isset($this->attributes['_id'])) $this->_id = $this->attributes['_id'];
         else $this->_id = Helper::getUniqueId();
 
         $this->attributes['_id'] = $this->_id;
