@@ -28,10 +28,10 @@ class Query
         return $this;
     }
 
-    public function random(mixed $count = null){
-        $this->collection = $this->collection->random($count);
+    public function shuffle(){
+        $this->collection = $this->collection->shuffle();
 
-        return (new Documents($this->bucket, $this->collection->toArray()));
+        return $this;
     }
 
     public function get(){
