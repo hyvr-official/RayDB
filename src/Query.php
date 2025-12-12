@@ -22,6 +22,18 @@ class Query
         return $this;
     }
 
+    public function limit(int $count){
+        $this->collection = $this->collection->take($count);
+
+        return $this;
+    }
+
+    public function random(mixed $count = null){
+        $this->collection = $this->collection->random($count);
+
+        return (new Documents($this->bucket, $this->collection->toArray()));
+    }
+
     public function get(){
         return (new Documents($this->bucket, $this->collection->toArray()));
     }
